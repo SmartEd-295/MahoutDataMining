@@ -1,4 +1,4 @@
-package Mahout.Mahou1;
+package Mahout.mahout;
 
 public class KMeans {
 

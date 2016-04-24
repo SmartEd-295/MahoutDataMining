@@ -1,4 +1,4 @@
-package Mahout.Mahou1;
+package Mahout.mahout;
 
 import java.io.File;
 import java.io.IOException;
