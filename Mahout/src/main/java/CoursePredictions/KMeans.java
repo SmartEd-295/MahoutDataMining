@@ -1,4 +1,4 @@
-package Mahout.mahout;
+package CoursePredictions;
 
 public class KMeans {
 
