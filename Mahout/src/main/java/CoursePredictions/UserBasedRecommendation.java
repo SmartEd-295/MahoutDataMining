@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.csv.CSVParser;
 import org.apache.mahout.cf.taste.common.TasteException;
 import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
 import org.apache.mahout.cf.taste.impl.neighborhood.ThresholdUserNeighborhood;
@@ -19,6 +20,8 @@ import org.bson.Document;
 
 import Model.RecommendedCourse;
 import Model.StudentRecommendation;
+import Model.WrapperClass;
+import Parser.CourseCSVParser;
 import Utility.Constants;
 import Utility.MongoLab;
 
@@ -35,9 +38,11 @@ public class UserBasedRecommendation {
 	public static void main(String[] args) throws TasteException {
 
 		UserBasedRecommendation rec = new UserBasedRecommendation();
-		rec.configureRecommendationEngine("CourseData.csv");
-		StudentRecommendation result = rec.getStudentRecommendation("9980698");
-		rec.addStudentRecommendationToMongoDB(result);
+		rec.configureRecommendationEngine("CourseDataAll2.csv");
+		rec.addRecommendationResultForAllStudents(rec);
+		
+		/*StudentRecommendation result = rec.getStudentRecommendation("9980698");
+		rec.addStudentRecommendationToMongoDB(result);*/
 	}
 
 	public void configureRecommendationEngine(String filePath) {
@@ -108,4 +113,18 @@ public class UserBasedRecommendation {
 		mongo.addToCollection(documentToIndert, "recommendedCourses");
 	}
 
+	public void addRecommendationResultForAllStudents(UserBasedRecommendation rec)
+	{
+		WrapperClass csvData =CourseCSVParser.getCoursesDetails();
+		ArrayList<String> studentIds = csvData.getStudentIds();
+		System.out.println(studentIds.get(0) + studentIds.get(1));
+		int i =0;
+		for(String ids:studentIds)
+		{
+			StudentRecommendation result = rec.getStudentRecommendation(ids);
+			rec.addStudentRecommendationToMongoDB(result);
+			System.out.println("Completed for student id:" + ids);
+		}
+		
+	}
 }

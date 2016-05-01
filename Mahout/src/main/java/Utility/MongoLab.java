@@ -20,10 +20,6 @@ public class MongoLab {
 	private void configureMongoLab()
 	{
 		mongoClient = new MongoClient(Constants.MONGO_CONNECTION_URL, Constants.MONGO_CONNECTION_URL_PORT);
-		/*db =  mongoClient.getDatabase(Constants.MONGO_DATABASE_NAME);
-		MongoCredential credential = MongoCredential.createPlainCredential(Constants.MONGO_DB_USERNAME,
-				Constants.MONGO_DATABASE_NAME,
-                Constants.MONGO_DB_PASSWORD.toCharArray());*/
 		String URL = "mongodb://"+Constants.MONGO_DB_USERNAME+":"+Constants.MONGO_DB_PASSWORD+"@"+Constants.MONGO_CONNECTION_URL+":"+Constants.MONGO_CONNECTION_URL_PORT+"/"+Constants.MONGO_DATABASE_NAME;
 		MongoClientURI uri = new MongoClientURI(URL);
 		mongoClient = new MongoClient(uri);
