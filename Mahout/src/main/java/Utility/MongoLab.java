@@ -30,8 +30,8 @@ public class MongoLab {
 		if (mongoClient == null || db == null) {
 			configureMongoLab();
 		}
-		MongoCollection<Document> recommendationCollection =  db.getCollection("recommendedCourses");
+		MongoCollection<Document> recommendationCollection =  db.getCollection(collectionName);
 		recommendationCollection.insertOne(object);
-		System.out.println("Data stored in mongo labs.");
 	}
+	
 }

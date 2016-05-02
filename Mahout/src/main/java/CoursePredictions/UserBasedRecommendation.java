@@ -39,10 +39,10 @@ public class UserBasedRecommendation {
 
 		UserBasedRecommendation rec = new UserBasedRecommendation();
 		rec.configureRecommendationEngine("CourseDataAll2.csv");
-		rec.addRecommendationResultForAllStudents(rec);
+		//rec.addRecommendationResultForAllStudents(rec);
 		
-		/*StudentRecommendation result = rec.getStudentRecommendation("9980698");
-		rec.addStudentRecommendationToMongoDB(result);*/
+		StudentRecommendation result = rec.getStudentRecommendation("9980698");
+		rec.addStudentRecommendationToMongoDB(result);
 	}
 
 	public void configureRecommendationEngine(String filePath) {
@@ -112,7 +112,7 @@ public class UserBasedRecommendation {
 		MongoLab mongo = new  MongoLab();
 		mongo.addToCollection(documentToIndert, "recommendedCourses");
 	}
-
+	
 	public void addRecommendationResultForAllStudents(UserBasedRecommendation rec)
 	{
 		WrapperClass csvData =CourseCSVParser.getCoursesDetails();
