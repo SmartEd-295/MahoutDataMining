@@ -1,5 +1,7 @@
 package Utility;
 
+import java.util.ArrayList;
+
 public class Constants {
 
 	
@@ -8,5 +10,7 @@ public class Constants {
 	public static String MONGO_DATABASE_NAME = "smartedlearninganalytics";
 	public static String MONGO_DB_USERNAME = "smarted";
 	public static String MONGO_DB_PASSWORD = "smarted";
-	public static int COURSE_RECOMMENDATION_COUNT = 10;
+	public static int COURSE_RECOMMENDATION_COUNT = 20;
+	
+	
 }

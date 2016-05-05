@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import Parser.CourseCSVParser;
@@ -46,8 +47,26 @@ public class CourseMongo {
 	{
 		this.name = name;
 		this.code = code;
-		this.peoplesoftId = peoplesoftId;c
+		this.peoplesoftId = peoplesoftId;
 		this.canvasId = canvasId;
 	}
+	
+	private static HashMap<Integer,String> coursesCodes = null;
+	public static HashMap<Integer,String> getCourseCodesNames()
+	{
+		if(coursesCodes == null)
+		{
+			coursesCodes = new HashMap<Integer, String>();
+			CourseCSVParser parser = new CourseCSVParser();
+			ArrayList<CourseMongo> coursesMongo = (ArrayList<CourseMongo>) parser.getCourseCodeAndName();
+			for(CourseMongo obj : coursesMongo)
+			{
+				if(!coursesCodes.containsKey(obj.getPeoplesoftId()))
+					coursesCodes.put(obj.getPeoplesoftId(),obj.getCode());
+			}
+		}
+		return coursesCodes;
+	}
+	
 	
 }
