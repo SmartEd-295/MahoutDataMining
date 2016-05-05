@@ -2,6 +2,9 @@ package CoursePredictions;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -117,7 +120,11 @@ public class UserBasedRecommendation {
 				System.out.println(level.toString() + " " + AcademicCareer.GRAD.toString() + " " + AcademicCareer.UGRD.toString());
 				if((value > 196 && level.toString().equals(AcademicCareer.GRAD.toString())) || (value <= 196 && level.toString().equals(AcademicCareer.UGRD.toString())))
 				{
-					RecommendedCourse course = new RecommendedCourse(courseId, grade,code);
+					NumberFormat formatter = new DecimalFormat("0.00");
+					BigDecimal big = new BigDecimal(grade);
+					big = big.setScale(2, BigDecimal.ROUND_CEILING);
+					System.out.println(big.toString());
+					RecommendedCourse course = new RecommendedCourse(courseId, big.toString(),code);
 					courses.add(course);
 				}
 			}

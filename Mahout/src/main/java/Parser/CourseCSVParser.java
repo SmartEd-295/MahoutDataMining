@@ -199,9 +199,6 @@ public class CourseCSVParser {
 				String term = studentEntry[4].replace('"', ' ').trim();
 				String level = studentEntry[5].replace('"', ' ').trim();
 				String department = studentEntry[7].replace('"', ' ').trim();
-				System.out.println(AcademicCareer.getAcademicCareer(level).toString() + " " + level 
-						+ " " + termEnrolled + " " + term 
-						+ " "+ department + " " + departmentCode + " " + i++);
 				if (AcademicCareer.getAcademicCareer(level).equals(gradLevel)
 						&& termEnrolled.equalsIgnoreCase(term)
 						&& department.contains(departmentCode)) {

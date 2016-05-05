@@ -11,6 +11,4 @@ public class Constants {
 	public static String MONGO_DB_USERNAME = "smarted";
 	public static String MONGO_DB_PASSWORD = "smarted";
 	public static int COURSE_RECOMMENDATION_COUNT = 20;
-	
-	
 }
