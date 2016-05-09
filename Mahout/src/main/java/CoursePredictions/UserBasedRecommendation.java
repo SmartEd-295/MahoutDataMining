@@ -47,11 +47,12 @@ public class UserBasedRecommendation {
 
 		UserBasedRecommendation rec = new UserBasedRecommendation();
 		rec.configureRecommendationEngine("CourseDataAll2.csv");
+		//List<Integer> ans = new MongoLab().getCoudsFromMLabrseI("courseInfo");
 		//rec.addRecommendationResultForAllStudents(rec);
 		
-		/*StudentRecommendation result = rec.getStudentRecommendation("9980698",AcademicCareer.GRAD);
-		rec.addStudentRecommendationToMongoDB(result);*/
-		rec.addRecommendationForSpecificStudents(rec, AcademicCareer.GRAD, "CMPE","2162");
+		//StudentRecommendation result = rec.getStudentRecommendation("9980698",AcademicCareer.GRAD);
+		//rec.addStudentRecommendationToMongoDB(result);
+		rec.addRecommendationForSpecificStudents(rec, AcademicCareer.GRAD, "SFTEMS-3","2162");
 	}
 
 	public void configureRecommendationEngine(String filePath) {
@@ -102,6 +103,8 @@ public class UserBasedRecommendation {
 		StudentRecommendation objRecommendation = new StudentRecommendation();
 		HashMap<Integer,String> codes = CourseMongo.getCourseCodesNames();
 		
+		if(result != null)
+		{
 		for(RecommendedItem item : result)
 		{
 			String courseId = String.valueOf(item.getItemID());
@@ -117,18 +120,17 @@ public class UserBasedRecommendation {
 				    value = Integer.parseInt(m.group());
 				    // append n to list
 				}
-				System.out.println(level.toString() + " " + AcademicCareer.GRAD.toString() + " " + AcademicCareer.UGRD.toString());
 				if((value > 196 && level.toString().equals(AcademicCareer.GRAD.toString())) || (value <= 196 && level.toString().equals(AcademicCareer.UGRD.toString())))
 				{
 					NumberFormat formatter = new DecimalFormat("0.00");
 					BigDecimal big = new BigDecimal(grade);
 					big = big.setScale(2, BigDecimal.ROUND_CEILING);
-					System.out.println(big.toString());
 					RecommendedCourse course = new RecommendedCourse(courseId, big.toString(),code);
 					courses.add(course);
 				}
 			}
 			
+		}
 		}
 		objRecommendation.setSjsuId(studentId);
 		objRecommendation.setRecommendations(courses);
@@ -164,13 +166,12 @@ public class UserBasedRecommendation {
 	{
 		List<Student> students = new CourseCSVParser().getStudents(departmentCode, gradLevel, term);
 		int count = 0;
+		
 		for(Student student : students)
 		{
-			if(count++ < 10)
-			{
 				StudentRecommendation recommendation = getStudentRecommendation(student.getStudentId(),student.getGradLevel());
 				addStudentRecommendationToMongoDB(recommendation);
-			}
+				System.out.println(student.getStudentId() + " done");
 		}
 	}
 }

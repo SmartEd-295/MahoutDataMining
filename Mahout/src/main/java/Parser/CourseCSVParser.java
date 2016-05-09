@@ -129,16 +129,12 @@ public class CourseCSVParser {
 						if (reverseCourse.containsKey(name.trim())) {
 							peoplesotId = Integer.valueOf(reverseCourse
 									.get(name.trim()));
-							System.out.println(reverseCourse.get(name.trim()));
-							System.out.println("found " + name + " id "
-									+ peoplesotId);
 
 						}
 						CourseMongo courseObject = new CourseMongo(code.trim(),
 								name.trim(), i++, peoplesotId);
 						list.add(courseObject);
 						courseName = courseName.trim();
-						System.out.println(name);
 						count++;
 					}
 				} catch (ArrayIndexOutOfBoundsException e) {
@@ -173,6 +169,7 @@ public class CourseCSVParser {
 		Document documentToIndert = Document.parse(json);
 		MongoLab mongo = new MongoLab();
 		mongo.addToCollection(documentToIndert, "courseDetails 	");
+		
 	}
 
 	public ArrayList<Student> getStudents(String departmentCode,
@@ -196,6 +193,7 @@ public class CourseCSVParser {
 
 				String[] studentEntry = line.split(cvsSplitBy);
 				String sjsuId = studentEntry[0].replace('"', ' ').trim();
+				sjsuId = sjsuId.trim().replaceFirst("^0+(?!$)", "");
 				String term = studentEntry[4].replace('"', ' ').trim();
 				String level = studentEntry[5].replace('"', ' ').trim();
 				String department = studentEntry[7].replace('"', ' ').trim();
@@ -218,5 +216,41 @@ public class CourseCSVParser {
 		}
 		System.out.println(students.size());
 		return students;
+	}
+	
+	public ArrayList<String> getQuizIds()
+	{
+		String csvFile = "quizids.csv";
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ",";
+		int count = 0;
+		ArrayList<String> ids = new ArrayList<String>();
+		try {
+			br = new BufferedReader(new FileReader(csvFile));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int i = 1;
+		
+		try {
+			while ((line = br.readLine()) != null) {
+
+				String[] entry = line.split(cvsSplitBy);
+				String id = entry[0];
+				ids.add(id);
+				System.out.println(id);
+				}
+				// Student student = new Student(gradLevel, department, sjsuId, );
+
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ids;
 	}
 }
